@@ -102,7 +102,9 @@ class Ball extends Entity {
         this.startingX = x;
         this.startingY = y;
         this.radius = canvas.width / 32;
-        this.speed = 8;
+        this.baseSpeed = 4;
+        this.maxSpeed = 12;
+        this.speed = this.baseSpeed;
         this.collidingWith = null;
         this.lastDirection = 1;
     }
@@ -149,7 +151,9 @@ class Ball extends Entity {
         let relativeX = 0;
         let angle = 0;
         
-        this.speed = 16;
+        if (this.speed < this.maxSpeed) {
+            this.speed = this.speed + 0.5;
+        }
         
         switch (this.collidingWith) {
             case 'canvasLeft':
@@ -210,7 +214,7 @@ class Ball extends Entity {
         this.y = this.startingY;
         this.lastDirection = -this.lastDirection;
         this.setDirection(0, this.lastDirection);
-        this.speed = 8;
+        this.speed = this.baseSpeed;
     }
 
     isCollidingWithPaddle(newX, newY, paddle) {
